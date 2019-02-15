@@ -1,3 +1,3 @@
 # UnityCA1
 
-Manipulating shape using mobile touch
+Manipulating shapes using mobile touch
