@@ -12,7 +12,8 @@ public class Selector : MonoBehaviour
 
     public void Awake()
     {
-        cam = GetComponent<Camera>();
+         cam = GetComponent<Camera>();
+       
     }
 
     public void Update()

@@ -16,9 +16,11 @@ public class ObjectRotate : Selectable
 
     public override void OnUpdate()
     {
+        
         if (Input.touchCount == 2){ 
                  
             Quaternion finalRotation = transform.rotation;
+    
             TouchCalculator.Calculate();
         
             //  If Rotate detected calculate finalRotation
@@ -31,6 +33,8 @@ public class ObjectRotate : Selectable
              
         // Rotate game object  
         transform.rotation = finalRotation;
+        
+     
        
         
 
