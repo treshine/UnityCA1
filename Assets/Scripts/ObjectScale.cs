@@ -19,24 +19,19 @@ public class ObjectScale : Selectable
 
     public override void OnUpdate()
     {
-        if (Input.touches.Length == 2)
-        {
-            float currentDistance = Vector2.Distance(
-                Input.touches[0].position,
-                Input.touches[1].position
-            );
-
-            if (initialDistance < 0)
-            {
-                initialDistance = currentDistance;
+        if (Input.touchCount == 2){   
+          
+         
+            TouchCalculator.Calculate();
+            float pinchAmount = 0;           
+            
+            //  If Pinch detected calculate finalRotation
+            if (TouchCalculator.isPinch) { 
+                pinchAmount = TouchCalculator.pinchDistanceDelta;
             }
-
-            transform.localScale = (currentDistance / initialDistance) * Vector3.one;
-
-            if (Input.touches[1].phase == TouchPhase.Ended)
-            {
-                initialDistance = -1;
-            }
+        
+            transform.localScale += Vector3.one * pinchAmount;
+            
         }
     }
 }
