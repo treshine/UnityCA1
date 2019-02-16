@@ -12,28 +12,33 @@ public class Selector : MonoBehaviour
 
     public void Awake()
     {
-        cam = this.GetComponent<Camera>();
+        cam = GetComponent<Camera>();
     }
 
     public void Update()
     {
-        if (Input.touches.Length == 1 && Input.touches[0].phase == TouchPhase.Ended)
+        if (Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Ended)
         {
-            Ray touchRay = cam.ScreenPointToRay(Input.GetTouch(0).position);
-
+            Ray laser = cam.ScreenPointToRay(Input.GetTouch(0).position);
+            Debug.DrawRay(laser.origin, 100 * laser.direction, Color.red);
+            
+            // What does the ray 'laser' hit
             RaycastHit hit;
 
-            if (Physics.Raycast(touchRay, out hit))
+            if (Physics.Raycast(laser, out hit))
             {
 
+                Debug.Log("Hit Something");
+                // hit.collider.GetComponent<Selectable>().YouveBeenSelected();
                 Selectable[] selectables = hit.collider.GetComponents<Selectable>();
+                
                 
                 if (selectables.Length > 0)
                 {
                     selected = hit.collider.gameObject;
                     foreach (Selectable s in selectables)
                     {
-                        s.onSelect();
+                        s.OnSelect();
                     }
                 }
             }
@@ -43,7 +48,7 @@ public class Selector : MonoBehaviour
                 {
                     foreach (Selectable s in selected.GetComponents<Selectable>())
                     {
-                        s.onDeselect();
+                        s.OnDeselect();
                     }
 
                     selected = null;
@@ -55,7 +60,7 @@ public class Selector : MonoBehaviour
         {
             foreach (Selectable s in selected.GetComponents<Selectable>())
             {
-                s.update();
+                s.OnUpdate();
             }
         }
     }

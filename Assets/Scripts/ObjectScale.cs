@@ -7,17 +7,17 @@ public class ObjectScale : Selectable
 
     private float initialDistance = -1;
     
-    public override void onSelect()
+    public override void OnSelect()
     {
-        this.GetComponent<Renderer>().material.color = Color.red;
+        GetComponent<Renderer>().material.color = Color.red;
     }
 
-    public override void onDeselect()
+    public override void OnDeselect()
     {
-        this.GetComponent<Renderer>().material.color = Color.white;
+        GetComponent<Renderer>().material.color = Color.white;
     }
 
-    public override void update()
+    public override void OnUpdate()
     {
         if (Input.touches.Length == 2)
         {
@@ -31,7 +31,7 @@ public class ObjectScale : Selectable
                 initialDistance = currentDistance;
             }
 
-            this.transform.localScale = (currentDistance / initialDistance) * Vector3.one;
+            transform.localScale = (currentDistance / initialDistance) * Vector3.one;
 
             if (Input.touches[1].phase == TouchPhase.Ended)
             {

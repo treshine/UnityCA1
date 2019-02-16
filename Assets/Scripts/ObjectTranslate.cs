@@ -9,17 +9,17 @@ public class ObjectTranslate : Selectable
     [SerializeField] // <-- makes variable visible in editor
     private Camera camera;
 
-    public override void onSelect()
+    public override void OnSelect()
     {
         this.GetComponent<Renderer>().material.color = Color.green;
     }
 
-    public override void onDeselect()
+    public override void OnDeselect()
     {
         this.GetComponent<Renderer>().material.color = Color.white;
     }
 
-    public override void update()
+    public override void OnUpdate()
     {
         if (Input.touches.Length == 2)
         {
