@@ -18,10 +18,10 @@ public class Selector : MonoBehaviour
 
     public void Update()
     {
-        if (Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Ended)
+        if (Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Began)
         {
             Ray laser = cam.ScreenPointToRay(Input.GetTouch(0).position);
-            Debug.DrawRay(laser.origin, 100 * laser.direction, Color.red);
+            Debug.DrawRay(laser.origin, 100 * laser.direction, Color.red, 5, true);
             
             // What does the ray 'laser' hit
             RaycastHit hit;
@@ -30,18 +30,18 @@ public class Selector : MonoBehaviour
             {
 
                 Debug.Log("Hit Something");
-                // hit.collider.GetComponent<Selectable>().YouveBeenSelected();
+
                 Selectable[] selectables = hit.collider.GetComponents<Selectable>();
                 
                 
-                if (selectables.Length > 0)
-                {
+                
                     selected = hit.collider.gameObject;
                     foreach (Selectable s in selectables)
                     {
                         s.OnSelect();
                     }
-                }
+                   
+                
             }
             else
             {

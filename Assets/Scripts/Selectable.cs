@@ -1,5 +1,5 @@
 ﻿
-//This abtract class will make it easier to handle selectable actions.
+//This abstract class will make it easier to handle selectable actions.
 
 using System.Collections;
 using System.Collections.Generic;

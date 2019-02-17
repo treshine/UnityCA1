@@ -29,6 +29,7 @@ public class ObjectRotate : Selectable
                 Vector3 rotationDegrees = Vector3.zero;
                 rotationDegrees.z = TouchCalculator.rotateAngleDelta;
                 finalRotation *= Quaternion.Euler(rotationDegrees);
+                
             }       
              
         // Rotate game object  

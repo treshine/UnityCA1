@@ -11,9 +11,11 @@ public class TouchCalculator : MonoBehaviour {
 	const float rotateSpeed = Mathf.PI / 2; // lower divisor = higher rotation speed
 	const float minRotateAngle = 0;   // Threshold value for rotate angle
  
-	const float panSpeed= 1;
-	const float inPanDistance = 0;
+	const float dragSpeed= 1;
+	const float minDragDistance = 0;
+	public static Vector3 touchedPos;
 
+	public static Boolean isDrag = false;
 	public static Boolean isRotate = false;
 	public static Boolean isPinch = false;
 	
@@ -23,12 +25,56 @@ public class TouchCalculator : MonoBehaviour {
 	public static float rotateAngle;  //  The angle between two touches
 	public static float rotateAngleDelta; // The difference of the angle between two touches
 	 
+	public static Camera cam;
+    
+        public void Awake()
+        {
+             cam = GetComponent<Camera>();
+           
+        }
+	
 	// Calculates Pinch and Rotate values
 	static public void Calculate () {
 		// Set distance and angle values to zero
 		pinchDistance = pinchDistanceDelta = 0;
 		rotateAngle = rotateAngleDelta = 0; 
  
+		
+		
+		
+		// Check for one finger
+		if (Input.touchCount == 1)
+		{
+			Touch touch0 = Input.touches[0];
+
+			// If the touch is stationary or has moved, it is a drag
+			if (touch0.phase == TouchPhase.Stationary || touch0.phase == TouchPhase.Moved)
+			{
+
+				//  ************************    Tap    *****************************************
+
+				// It is a Tap once value 
+			}
+			
+			// If the touch is stationary or has moved, it is a drag
+			if (touch0.phase == TouchPhase.Stationary || touch0.phase == TouchPhase.Moved)
+			{
+
+				//  ************************    DRAG    *****************************************
+
+				touchedPos = cam.ScreenToWorldPoint(new Vector3(touch0.position.x, touch0.position.y, 10));
+
+				isDrag = true;
+			}
+			else
+				{
+
+					isDrag = false;
+				}
+			
+
+		}
+
 		// Check for two fingers
 		if (Input.touchCount == 2) {
 			Touch touch1 = Input.touches[0];

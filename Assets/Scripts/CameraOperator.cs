@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraOperator : MonoBehaviour
 {
-
-    
+    private float panSpeed = 0.03f;
     private float zoomSpeed = 0.3f;    // Rate of change of camera Field Of View
     private float lookSpeedReducer = 10.0f;     // Used to slow down yaw and pitch values (higher = slower) 
  
@@ -14,7 +14,10 @@ public class CameraOperator : MonoBehaviour
     private float pitch = 0.0f;
     public float horizontalInv = -1.0f;
     public float verticalInv = -1.0f;
-    
+
+    public Boolean camLook = true;
+    public Boolean camPan = false;
+
     public Selector selector;
      
     private void Update()
@@ -22,20 +25,45 @@ public class CameraOperator : MonoBehaviour
         
    
         
-        if (selector.selected == null && Input.touches.Length == 1)
+        if (selector.selected == null && Input.touchCount == 1)
         {
-            // Get yaw value from touch x change
-            yaw += (Input.touches[0].deltaPosition.x  / lookSpeedReducer) * horizontalInv; 
-            
-            // Get pitch value from touch y change
-            pitch -= (Input.touches[0].deltaPosition.y / lookSpeedReducer) * verticalInv;
-            
-            // Clamp the pitch to limit view
-            pitch = Mathf.Clamp(pitch, -30, 30);
-            
-            // apply yaw and pitch values to camera
-            transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+            if (camLook)
+            {
+                // Get yaw value from touch x change
+                yaw += (Input.touches[0].deltaPosition.x / lookSpeedReducer) * horizontalInv;
+
+                // Get pitch value from touch y change
+                pitch -= (Input.touches[0].deltaPosition.y / lookSpeedReducer) * verticalInv;
+
+                // Clamp the pitch to limit view
+                pitch = Mathf.Clamp(pitch, -30, 30);
+
+                // apply yaw and pitch values to camera
+                transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+            }
+
+            if (camPan)
+            {
+
+                if (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved)
+
+                {
+                    Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+                   
+                    transform.Translate(-touchDeltaPosition.x * panSpeed, -touchDeltaPosition.y * panSpeed, 0);
+                    transform.position = new Vector3(
+                        Mathf.Clamp(transform.position.x, -8.0f, 18.0f),
+                        Mathf.Clamp(transform.position.y,  0.0f, 5.0f),
+                        Mathf.Clamp(transform.position.z, -25.0f, 8.0f));
+
+
+
+                }
+
+
+            }
         }
+    
 
         if (selector.selected == null && Input.touches.Length == 2 && Input.GetTouch(0).phase == TouchPhase.Moved 
             && Input.GetTouch(1).phase == TouchPhase.Moved)
