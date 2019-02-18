@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\ObjectTranslate.cs" />
     <Compile Include="Assets\Scripts\Selectable.cs" />
     <Compile Include="Assets\Scripts\Selector.cs" />
+    <Compile Include="Assets\Scripts\SphereControl.cs" />
     <Compile Include="Assets\Scripts\TouchCalculator.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/_Mobile/UnityCA1/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

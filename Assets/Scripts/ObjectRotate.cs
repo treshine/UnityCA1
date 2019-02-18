@@ -6,12 +6,12 @@ public class ObjectRotate : Selectable
 {    
     public override void OnSelect()
     {
-        this.GetComponent<Renderer>().material.color = Color.green;
+       
     }
 
     public override void OnDeselect()
     {
-        this.GetComponent<Renderer>().material.color = Color.white;
+       
     }
 
     public override void OnUpdate()
@@ -29,11 +29,11 @@ public class ObjectRotate : Selectable
                 Vector3 rotationDegrees = Vector3.zero;
                 rotationDegrees.z = TouchCalculator.rotateAngleDelta;
                 finalRotation *= Quaternion.Euler(rotationDegrees);
-                
+                transform.rotation = finalRotation;
             }       
              
         // Rotate game object  
-        transform.rotation = finalRotation;
+        
         
      
        

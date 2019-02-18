@@ -5,17 +5,21 @@ using UnityEngine;
 
 public class ObjectScale : Selectable
 {
-
-    private float initialDistance = -1;
+    private Color origMaterial; // Material gameobject
     
+
+
+
     public override void OnSelect()
     {
-        GetComponent<Renderer>().material.color = Color.red;
+        origMaterial = GetComponent<Renderer>().material.color;
+        GetComponent<Renderer>().material.color = Color.magenta;
+        
     }
 
     public override void OnDeselect()
     {
-        GetComponent<Renderer>().material.color = Color.white;
+        GetComponent<Renderer>().material.color = origMaterial;
     }
 
     public override void OnUpdate()

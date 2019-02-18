@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class Selector : MonoBehaviour
 {
-
+   
     public GameObject selected = null;
+    
     private Camera cam;
 
     public void Awake()
@@ -26,21 +27,30 @@ public class Selector : MonoBehaviour
             // What does the ray 'laser' hit
             RaycastHit hit;
 
+            // If laser hits an object
             if (Physics.Raycast(laser, out hit))
             {
+                // Clear any previous selected components
+                if (selected != null)
+                {
+                    foreach (Selectable s in selected.GetComponents<Selectable>())
+                    {
+                        s.OnDeselect();
+                    }
+                    selected = null;
+                }
+                    
 
                 Debug.Log("Hit Something");
-
+                // Get gameobject components that are Selectable and store in Selectable[]
                 Selectable[] selectables = hit.collider.GetComponents<Selectable>();
-                
-                
-                
+     
                     selected = hit.collider.gameObject;
+                    
                     foreach (Selectable s in selectables)
                     {
                         s.OnSelect();
-                    }
-                   
+                    }                       
                 
             }
             else
@@ -51,7 +61,6 @@ public class Selector : MonoBehaviour
                     {
                         s.OnDeselect();
                     }
-
                     selected = null;
                 }
             }

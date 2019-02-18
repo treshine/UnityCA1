@@ -1,9 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
- 
+
 public class TouchCalculator : MonoBehaviour {
 	
+	
+	// !!! Input.GetTouch may be faster according to some developers
+    			// change if too slow
+
+	const float minDragDistance = 1;  // Threshold value for drag distance
 	
 	const float pinchSpeed = 0.02f;
     const float minPinchDistance = 0;  // Threshold value for pinch distance
@@ -11,16 +16,17 @@ public class TouchCalculator : MonoBehaviour {
 	const float rotateSpeed = Mathf.PI / 2; // lower divisor = higher rotation speed
 	const float minRotateAngle = 0;   // Threshold value for rotate angle
  
-	const float dragSpeed= 1;
-	const float minDragDistance = 0;
-	public static Vector3 touchedPos;
 
+	public static Boolean isTap = false;
 	public static Boolean isDrag = false;
 	public static Boolean isRotate = false;
 	public static Boolean isPinch = false;
+
+	public static float dragDistance;   //  how far the drag moved
+	public static float dragDistanceDelta;  // Difference between drag positions
 	
-	public static float pinchDistanceDelta; // Difference in distance between two touches
 	public static float pinchDistance;  //  Distance between two touches
+	public static float pinchDistanceDelta; // Difference in distance between two touches
 	
 	public static float rotateAngle;  //  The angle between two touches
 	public static float rotateAngleDelta; // The difference of the angle between two touches
@@ -38,41 +44,42 @@ public class TouchCalculator : MonoBehaviour {
 		// Set distance and angle values to zero
 		pinchDistance = pinchDistanceDelta = 0;
 		rotateAngle = rotateAngleDelta = 0; 
- 
 		
-		
-		
+
 		// Check for one finger
 		if (Input.touchCount == 1)
 		{
-			Touch touch0 = Input.touches[0];
-
-			// If the touch is stationary or has moved, it is a drag
-			if (touch0.phase == TouchPhase.Stationary || touch0.phase == TouchPhase.Moved)
-			{
-
-				//  ************************    Tap    *****************************************
-
-				// It is a Tap once value 
-			}
 			
-			// If the touch is stationary or has moved, it is a drag
-			if (touch0.phase == TouchPhase.Stationary || touch0.phase == TouchPhase.Moved)
+			Touch touchZero= Input.GetTouch(0);
+            // If the touch is stationary or has moved, it is not a tap
+			if (touchZero.phase == TouchPhase.Stationary || touchZero.phase == TouchPhase.Moved)
 			{
+				//  ************************    Drag   *****************************************
+				// Calculate the distance between touch position
+				dragDistance = Vector3.Distance(touchZero.deltaPosition, touchZero.position);
+				Debug.Log("dragDistance: " + dragDistance);
 
-				//  ************************    DRAG    *****************************************
-
-				touchedPos = cam.ScreenToWorldPoint(new Vector3(touch0.position.x, touch0.position.y, 10));
-
-				isDrag = true;
-			}
-			else
+				// It is a Drag once value is greater than the Minimum Drag distance 
+				if (Mathf.Abs(dragDistance) > minDragDistance)
 				{
+					isDrag = true;
+					isTap = false;
+					
 
-					isDrag = false;
-				}
+					
+				}	
+			}
 			
-
+		
+			else 
+			{
+				//  ************************    Tap    *****************************************
+				isTap = true;
+				isDrag = false;
+			}
+			
+			//Debug.Log("isDrag: " + isDrag);
+            //Debug.Log("isTap: " + isTap);
 		}
 
 		// Check for two fingers
@@ -134,7 +141,7 @@ public class TouchCalculator : MonoBehaviour {
 	}
  
 	// Calculates the angle between two vectors using cross product
-	static private float angleBetweenVectors (Vector2 position1, Vector2 position2) {
+	private static float angleBetweenVectors (Vector2 position1, Vector2 position2) {
 		Vector2 from = position2 - position1;
 		Vector2 to = new Vector2(1, 0);
  

@@ -15,20 +15,35 @@ public class CameraOperator : MonoBehaviour
     public float horizontalInv = -1.0f;
     public float verticalInv = -1.0f;
 
-    public Boolean camLook = true;
-    public Boolean camPan = false;
+    public Boolean camLook;
+    public Boolean camPan ;
 
     public Selector selector;
      
     private void Update()
     {
-        
-   
-        
+        // Check orientation of device and change camera type
+        if (Input.deviceOrientation == DeviceOrientation.Portrait || 
+            Input.deviceOrientation == DeviceOrientation.PortraitUpsideDown)
+           
+        {
+            camLook = true;
+            camPan = false;
+            Debug.Log("camLook: " + camLook);
+        }
+        else
+        {
+            camLook = false;
+            camPan = true;
+            Debug.Log("camPan: " + camPan);
+        }
+
+        // Nothing is selected so camera is active
         if (selector.selected == null && Input.touchCount == 1)
         {
             if (camLook)
             {
+                
                 // Get yaw value from touch x change
                 yaw += (Input.touches[0].deltaPosition.x / lookSpeedReducer) * horizontalInv;
 
@@ -42,7 +57,7 @@ public class CameraOperator : MonoBehaviour
                 transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
             }
 
-            if (camPan)
+            else
             {
 
                 if (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Moved)
