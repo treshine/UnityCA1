@@ -21,7 +21,7 @@ public class ObjectRotate : Selectable
                  
             Quaternion finalRotation = transform.rotation;
     
-            TouchCalculator.Calculate();
+           /* TouchCalculator.Calculate();
         
             //  If Rotate detected calculate finalRotation
             if (TouchCalculator.isRotate) {
@@ -32,14 +32,8 @@ public class ObjectRotate : Selectable
                 transform.rotation = finalRotation;
             }       
              
-        // Rotate game object  
-        
-        
-     
-       
-        
-
-            
+        / Rotate game object  
+         */    
         }
     }
 }

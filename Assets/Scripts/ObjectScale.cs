@@ -26,7 +26,7 @@ public class ObjectScale : Selectable
     {
         if (Input.touchCount == 2){   
           
-         
+         /*
             TouchCalculator.Calculate();
             float pinchAmount = 0;      
             float Max = 2.0f;
@@ -46,7 +46,7 @@ public class ObjectScale : Selectable
                          Mathf.Clamp(transform.localScale.z, Min, Max)
                     );
                  
-             
+             */
         }
     }
 }

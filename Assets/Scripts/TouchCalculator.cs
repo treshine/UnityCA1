@@ -1,14 +1,18 @@
-﻿using System;
+﻿/*
+
+using System;
 using UnityEngine;
 using System.Collections;
 
 public class TouchCalculator : MonoBehaviour {
 	
 	
+	
+	
 	// !!! Input.GetTouch may be faster according to some developers
     			// change if too slow
 
-	const float minDragDistance = 1;  // Threshold value for drag distance
+	
 	
 	const float pinchSpeed = 0.02f;
     const float minPinchDistance = 0;  // Threshold value for pinch distance
@@ -16,14 +20,13 @@ public class TouchCalculator : MonoBehaviour {
 	const float rotateSpeed = Mathf.PI / 2; // lower divisor = higher rotation speed
 	const float minRotateAngle = 0;   // Threshold value for rotate angle
  
-
-	public static Boolean isTap = false;
+    // move to selector
+	private static Boolean isTap = false;
 	public static Boolean isDrag = false;
 	public static Boolean isRotate = false;
 	public static Boolean isPinch = false;
 
-	public static float dragDistance;   //  how far the drag moved
-	public static float dragDistanceDelta;  // Difference between drag positions
+	
 	
 	public static float pinchDistance;  //  Distance between two touches
 	public static float pinchDistanceDelta; // Difference in distance between two touches
@@ -32,6 +35,7 @@ public class TouchCalculator : MonoBehaviour {
 	public static float rotateAngleDelta; // The difference of the angle between two touches
 	 
 	public static Camera cam;
+	
     
         public void Awake()
         {
@@ -52,11 +56,11 @@ public class TouchCalculator : MonoBehaviour {
 			
 			Touch touchZero= Input.GetTouch(0);
             // If the touch is stationary or has moved, it is not a tap
-			if (touchZero.phase == TouchPhase.Stationary || touchZero.phase == TouchPhase.Moved)
+			if (TouchPhase.Moved)
 			{
 				//  ************************    Drag   *****************************************
 				// Calculate the distance between touch position
-				dragDistance = Vector3.Distance(touchZero.deltaPosition, touchZero.position);
+				dragDistance = Vector2.Distance(touchZero.deltaPosition, touchZero.position);
 				Debug.Log("dragDistance: " + dragDistance);
 
 				// It is a Drag once value is greater than the Minimum Drag distance 
@@ -72,7 +76,7 @@ public class TouchCalculator : MonoBehaviour {
 			
 		
 			else 
-			{
+			{/
 				//  ************************    Tap    *****************************************
 				isTap = true;
 				isDrag = false;
@@ -132,7 +136,7 @@ public class TouchCalculator : MonoBehaviour {
 					rotateAngleDelta *= rotateSpeed;
 				} else {
 					isRotate = false;
-					// Not a Rotate so reset rotate values
+					// Not a Rotate so reset values
 					rotateAngle = rotateAngleDelta = 0;
 					
 				}
@@ -157,4 +161,4 @@ public class TouchCalculator : MonoBehaviour {
  
 		return result;
 	}
-}
+}*/

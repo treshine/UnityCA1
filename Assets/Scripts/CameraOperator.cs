@@ -18,7 +18,7 @@ public class CameraOperator : MonoBehaviour
     public Boolean camLook;
     public Boolean camPan ;
 
-    public Selector selector;
+    public Selector selector; // The selector object is created to handle touch
      
     private void Update()
     {
@@ -35,7 +35,7 @@ public class CameraOperator : MonoBehaviour
         {
             camLook = false;
             camPan = true;
-            Debug.Log("camPan: " + camPan);
+            // Debug.Log("camPan: " + camPan);
         }
 
         // Nothing is selected so camera is active
