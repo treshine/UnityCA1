@@ -17,23 +17,19 @@ public class ObjectRotate : Selectable
     public override void OnUpdate()
     {
         
-        if (Input.touchCount == 2){ 
-                 
+        if (Input.touchCount == 2 && Selector.isRotate){ 
+            
             Quaternion finalRotation = transform.rotation;
-    
-           /* TouchCalculator.Calculate();
         
             //  If Rotate detected calculate finalRotation
-            if (TouchCalculator.isRotate) {
+            if (Selector.isRotate) {
            
                 Vector3 rotationDegrees = Vector3.zero;
-                rotationDegrees.z = TouchCalculator.rotateAngleDelta;
+                rotationDegrees.z = Selector.rotateAngleDelta;
                 finalRotation *= Quaternion.Euler(rotationDegrees);
                 transform.rotation = finalRotation;
             }       
-             
-        / Rotate game object  
-         */    
+
         }
     }
 }

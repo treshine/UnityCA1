@@ -5,48 +5,38 @@ using UnityEngine;
 
 public class ObjectScale : Selectable
 {
-    private Color origMaterial; // Material gameobject
-    
-
-
 
     public override void OnSelect()
     {
-        origMaterial = GetComponent<Renderer>().material.color;
-        GetComponent<Renderer>().material.color = Color.magenta;
+
         
     }
 
     public override void OnDeselect()
     {
-        GetComponent<Renderer>().material.color = origMaterial;
+
     }
 
     public override void OnUpdate()
     {
-        if (Input.touchCount == 2){   
-          
-         /*
-            TouchCalculator.Calculate();
-            float pinchAmount = 0;      
-            float Max = 2.0f;
-            float Min = 0.2f;
+        if (Input.touchCount == 2 && Selector.isScale){   
+  
+            float scaleMax = 2.0f;
+            float scaleMin = 0.5f;
             
-            //  If Pinch detected calculate finalRotation
-            if (TouchCalculator.isPinch) { 
-                pinchAmount = TouchCalculator.pinchDistanceDelta;
-            }
+            //  If Pinch detected calculate scale
+  
+            float pinchAmount = Selector.pinchDistanceDelta;
+            
             // Set the scale of the object based on pinch
             transform.localScale += Vector3.one * pinchAmount;
             
             // Clamp the scale values
             transform.localScale = new Vector3(
-                         Mathf.Clamp(transform.localScale.x, Min, Max),
-                         Mathf.Clamp(transform.localScale.y, Min, Max),
-                         Mathf.Clamp(transform.localScale.z, Min, Max)
+                         Mathf.Clamp(transform.localScale.x, scaleMin, scaleMax),
+                         Mathf.Clamp(transform.localScale.y, scaleMin, scaleMax),
+                         Mathf.Clamp(transform.localScale.z, scaleMin, scaleMax)
                     );
-                 
-             */
         }
     }
 }

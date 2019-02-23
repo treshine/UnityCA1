@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ObjectTranslate : Selectable
 {
-    private const float dragSpeed = 10.0f;
+    private const float dragSpeed = 10f;
     private Color origMaterial; // Material gameobject
       
   
@@ -28,21 +28,17 @@ public class ObjectTranslate : Selectable
     public override void OnUpdate()
     {
         //  If Drag detected calculate translation
-        if (Input.touchCount == 1 && Selector.isDrag) {
-            
-                
-                // Best results with transform.position.z of 10
-                Vector3 touchedPos = Selector.cam.ScreenToWorldPoint(new Vector3(
-                                                                            Input.GetTouch(0).position.x, 
-                                                                            Input.GetTouch(0).position.y, 
-                                                                            10f));
-                print(touchedPos);
-                // Use Vector3.Lerp to interpolate transform
-                transform.position = Vector3.Lerp(transform.position, touchedPos, Time.deltaTime * dragSpeed);
-            
-            
-            
-           
+        if (Input.touchCount == 1 && Selector.isDrag && Input.GetTouch(0).phase == TouchPhase.Moved) {
+    
+            // Best results with transform.position.z of 10
+            Vector3 touchedPos = Selector.cam.ScreenToWorldPoint(new Vector3(
+                Input.GetTouch(0).position.x,
+                Input.GetTouch(0).position.y,
+                10f));
+
+            // Use Vector3.Lerp to interpolate transform
+            transform.position = Vector3.Lerp(transform.position, touchedPos, Time.deltaTime * dragSpeed);
+              
         }
     }
 }
